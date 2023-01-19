@@ -1,0 +1,31 @@
+.input {
+    width: max-content;
+    position: relative;
+    display: inline-block;
+    flex: 1 1 auto;
+    margin: 5px;
+    margin-top: 1.4rem;
+}
+
+.input > label {
+    position: absolute;
+    font-size: 1.3rem;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-2rem);
+}
+
+.input > input,
+.input > select {
+    padding: 15px;
+    border: 0;
+    background-color: #ebebeb;
+    border-radius: 15px;
+    min-width: 150px;
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.input > input {
+    width: calc(100% - 30px);
+}

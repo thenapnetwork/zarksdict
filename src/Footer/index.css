@@ -1,0 +1,24 @@
+footer {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer > div {
+    margin: 20px;
+}
+
+footer > div > span {
+    color: #5e5e5e;
+    font-style: italic;
+}
+
+footer > div > span > a {
+    color: #0078e9;
+}
+
+footer > div > span:not(:last-child)::after {
+    content: "‧";
+}

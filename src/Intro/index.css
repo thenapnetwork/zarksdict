@@ -1,0 +1,18 @@
+.intro {
+    background-color: #ffcc92;
+    border-radius: 15px;
+    padding: 20px;
+    font-size: 1.5rem;
+    margin: 15px;
+}
+
+.intro.err {
+    background-color: #ff4d4d !important;
+    color: #fff !important;
+}
+
+.intro .highlight,
+.intro a {
+    color: #402bff;
+    font-weight: bold;
+}

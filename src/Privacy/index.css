@@ -1,0 +1,30 @@
+.privacy {
+    margin-top: 80px;
+    max-width: 1000px;
+}
+
+.privacy .header {
+    margin-bottom: 50px;
+}
+
+.privacy .header h1 {
+    font-size: 2.5rem;
+}
+
+.privacy .body > div {
+    margin-bottom: 50px;
+}
+
+.privacy h3 {
+    font-size: 2.3rem;
+    margin-bottom: 25px;
+}
+
+.privacy h4 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.privacy p {
+    margin-bottom: 15px;
+}

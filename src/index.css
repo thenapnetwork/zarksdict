@@ -1,0 +1,86 @@
+* {
+    font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+
+    transition: .6s;
+    margin: 0;
+    padding: 0;
+    word-break: break-word;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+.mainApp {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.mainApp > div {
+    width: 80%;
+    max-width: 1500px;
+    min-width: 350px;
+}
+
+.topMargin {
+    margin-top: 30px;
+}
+
+.width80 {
+    width: 80%;
+}
+
+.btns {
+    margin-top: 15px;
+    max-width: fit-content;
+    text-align: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+}
+
+.cycle {
+    animation: round infinite .8s linear;
+}
+
+#loadEvent,
+.special {
+    color: #0078e9;
+}
+
+.close {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 100px;
+}
+
+.close:hover {
+    background-color: #00000029;
+}
+
+@keyframes round {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,13 @@
+.wordBox {
+    display: inline-block;
+    padding: 15px;
+    flex: 1 1 auto;
+    margin: 15px;
+    background-color: #9ed7ffb8;
+    border-radius: 15px;
+}
+
+.wordBox:hover {
+    transform: translate(10px, -10px);
+    box-shadow: -5px 5px 5px 4px #0000009e;
+}

@@ -1,0 +1,23 @@
+header {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+header > div {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+}
+
+header > div > img {
+    margin-right: 15px;
+    width: auto;
+    height: 75px;
+    border-radius: 15px;
+}
+
+header > div > div > h5 > a {
+    color: #6495ed;
+}

@@ -1,0 +1,18 @@
+button {
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 2rem;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #707070;
+    box-shadow: 0 3px 5px 1px #00000059;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 5px 1px #f719ff59;
+    border-color: #f719ff;
+}

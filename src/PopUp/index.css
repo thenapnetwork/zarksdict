@@ -1,0 +1,32 @@
+.popup {
+    position: fixed;
+    top: 0;
+    background-color: #00000080;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.popup > div {
+    width: 80%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.popup > div .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.popup > div .body > div:not(:last-child) {
+    margin-bottom: 150px;
+}
+
+.popup > div .body a {
+    display: block;
+}

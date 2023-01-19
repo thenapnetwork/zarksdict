@@ -1,0 +1,21 @@
+.separate {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.separate span {
+    padding: 5px;
+    color: #c8c8c8;
+    vertical-align: middle;
+}
+
+.separate::after,
+.separate::before {
+    content: "";
+    display: inline-block;
+    width: 35%;
+    border-top: 2px #c8c8c8 solid;
+    flex: auto;
+}

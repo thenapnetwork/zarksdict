@@ -1,0 +1,7 @@
+#dict > div {
+    margin: 15px 0;
+}
+.wordList {
+    display: flex;
+    flex-wrap: wrap;
+}
