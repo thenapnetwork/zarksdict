@@ -208,18 +208,18 @@ export default () => {
                             ? Object.keys(parserObject.display).map((key) => {
                                 let value = parserObject.display[key];
                                 let words = value.map(d => <WordBox key={genRandomString(12)} {...d} onClick={() => showPopUp(d.chinese, d.english, key)} />);
-                                return <div key={genRandomString(8)}>
+                                return <div key={genRandomString(8)} style={{
+                                    width: "100%"
+                                }}>
                                     <h1>({key}.) 系列</h1>
                                     <div className="wordList">
                                         {words}
                                     </div>
                                 </div>;
                             })
-                            : parserObject.display.map(e => {
-                                return <div className="wordList" key={genRandomString(12)}>
-                                    <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />
-                                </div>;
-                            })
+                            : <div className="wordList">
+                                {parserObject.display.map(e => <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />)}
+                            </div>
                     }
                 </div>
             </div>
