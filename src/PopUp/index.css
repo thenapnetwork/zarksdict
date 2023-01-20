@@ -30,3 +30,7 @@
 .popup > div .body a {
     display: block;
 }
+
+.popup > div .body p {
+    margin-bottom: 15px;
+}

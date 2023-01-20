@@ -44,11 +44,12 @@ export const errorShow = (error, navigate) => {
 
 export const genRandomString = (length) => (Math.random() * length * Math.pow(10, length)).toString(36).substring(0, length);
 
-export const showPopUp = (title, children) => {
+export const showPopUp = (title, children, onClose = () => { }) => {
     let pop = document.createElement("div");
     pop.id = "popup";
     document.body.appendChild(pop);
     createRoot(document.querySelector("#popup")).render(<PopUp title={title} onClose={() => {
         document.querySelector("#popup")?.remove();
+        onClose();
     }}>{children}</PopUp>);
 }
