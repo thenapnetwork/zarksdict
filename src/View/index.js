@@ -4,7 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { MdNorthEast } from "react-icons/md";
 
 import { getSheet, getSheetsList } from "../Google/APIs";
-import { errorShow, Loading, genRandomString, showPopUp as createPopUp } from "../util";
+import { errorShow, Loading, genRandomString, showPopUp as createPopUp, getMonth } from "../util";
 import Button from "../Button";
 import Input from "../Input";
 import Separate from "../Separate";
@@ -37,8 +37,8 @@ export default () => {
         });
         if (type === 1) setSelectParams({
             ...selectParams,
-            month: value,
-            day: Object.keys(data.formatedData[selectParams.year][value])[0]
+            month: getMonth(value)[0],
+            day: Object.keys(data.formatedData[selectParams.year][getMonth(value)[0]])[0]
         });
         if (type === 2) setSelectParams({
             ...selectParams,
@@ -100,29 +100,38 @@ export default () => {
 
             setLoadStatus("解析資料");
 
+            const date = new Date();
+
             let formatedData = {};
             let wlist = []
 
-            let times = 0;
+            // let times = 0;
             let y = 0;
             let m = "";
             let bfM = "";
             let d = 0;
 
-            let nType = []
+            let matches = [false, 0];
+
+            let nType = [];
 
             try {
                 for (let i = 0; i < sheetData.result.values.length; i++) {
                     let data = sheetData.result.values.shift();
                     let l = data;
                     if (l[0]) {
-                        times++;
                         let s = l[0].split(" ");
+
                         bfM = m;
                         m = s[0];
                         d = Number(s[1]);
-
                         y = m !== "December" && bfM === "December" ? ++y : y;
+
+                        if (m == getMonth(date.getMonth() + 1)[0] && d === date.getDate()) {
+                            matches[0] = true;
+                            matches[1] = y;
+                        }
+
                         if (!formatedData[y]) formatedData[y] = {};
                         if (!formatedData[y][m]) formatedData[y][m] = {};
 
@@ -153,10 +162,11 @@ export default () => {
 
                 setLoadStatus("載入");
                 setData({ init: true, formatedData, wlist });
+
                 setSelectParams({
-                    year: Object.keys(formatedData)[0],
-                    month: Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
-                    day: Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
+                    year: matches[0] ? matches[1] : Object.keys(formatedData)[0],
+                    month: matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
+                    day: matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
                 });
             } catch (err) {
                 console.error("Catch Error:", err);
@@ -179,7 +189,7 @@ export default () => {
 
     if (data.init) {
         parserObject.options.year = Object.keys(data.formatedData);
-        parserObject.options.month = Object.keys(data.formatedData[selectParams.year]);
+        parserObject.options.month = Object.keys(data.formatedData[selectParams.year]).map(e => getMonth(e)[1]);
         parserObject.options.day = Object.keys(data.formatedData[selectParams.year][Object.keys(data.formatedData[selectParams.year])[0]]);
 
         if (!search.trim()) parserObject.display = data.formatedData[selectParams.year][selectParams.month][selectParams.day];
@@ -192,7 +202,7 @@ export default () => {
             {alert}
             <div className="function">
                 <SelectInput title="年分" defaultValue={selectParams.year} onChange={(val) => selectData(0, val)} options={parserObject.options.year} />
-                <SelectInput title="月份" defaultValue={selectParams.month} onChange={(val) => selectData(1, val)} options={parserObject.options.month} />
+                <SelectInput title="月份" defaultValue={getMonth(selectParams.month)[1]} onChange={(val) => selectData(1, val)} options={parserObject.options.month} />
                 <SelectInput title="天" defaultValue={selectParams.day} onChange={(val) => selectData(2, val)} options={parserObject.options.day} />
                 <Input title="查詢單字" defaultValue={search} onChange={setSearch} />
             </div>

@@ -22,7 +22,7 @@ export default () => {
 
     return <div className="center">
         <div className="textCenter">
-            <h1>讓我們登入吧!</h1>
+            <h1>讓我們開始吧!</h1>
             <h4>從登入你的Google帳號開始(需要有權限的)</h4>
 
             <div className="center topMargin">

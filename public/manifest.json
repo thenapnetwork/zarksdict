@@ -3,7 +3,7 @@
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "/?pwa",
     "name": "Zark \u6bcf\u65e5\u55ae\u5b57\u67e5\u8a62\u5668",
     "short_name": "Zark's Dictionary",
     "icons": [

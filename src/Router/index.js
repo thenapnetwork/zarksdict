@@ -8,6 +8,7 @@ import Select from "../Select";
 import View from "../View";
 import ErrorPage from "../ErrorPage";
 import Privacy from "../Privacy";
+import Functions from "../Functions";
 
 export default () => {
     return <BrowserRouter>
@@ -20,6 +21,9 @@ export default () => {
             <Route path="/error" element={<ErrorPage />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/privacy.html" element={<Privacy />} />
+
+            {/* PWA mode functions */}
+            <Route path="/functions" element={<Functions />} />
         </Routes>
     </BrowserRouter>;
 }

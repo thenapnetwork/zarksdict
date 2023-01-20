@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FaGoogleDrive, FaLink, FaChevronLeft } from "react-icons/fa";
+import { FaGoogleDrive, FaLink, FaChevronLeft, FaRegFile } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 
 import { isLogined, FilePicker, Logout } from "../Google/APIs";
@@ -39,6 +39,7 @@ export default () => {
                 {
                     isLogined() &&
                     <>
+                        <Button Icon={FaRegFile} onClick={() => gn("1LTTKTmuYSrG408_pSyazFsMlaMdHWCLOi2TgqzFzhQg")}>快速開啟該Sheet</Button>
                         <Button Icon={FaGoogleDrive} onClick={fp}>用 Google Drive 選擇</Button>
                         <Separate>或</Separate>
                     </>

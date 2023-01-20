@@ -53,3 +53,27 @@ export const showPopUp = (title, children, onClose = () => { }) => {
         onClose();
     }}>{children}</PopUp>);
 }
+
+export const monthsData = [
+    ["January", "一月"],
+    ["February", "二月"],
+    ["March", "三月"],
+    ["April", "四月"],
+    ["May", "五月"],
+    ["June", "六月"],
+    ["July", "七月"],
+    ["August", "八月"],
+    ["September", "九月"],
+    ["October", "十月"],
+    ["November", "十一月"],
+    ["December", "十二月"]
+];
+
+export const getMonth = (monthString) => {
+    if (typeof monthString === "number") return monthsData[monthString - 1];
+    return monthsData.find(e => e[0] === monthString || e[1] === monthString);
+}
+
+// Check PWA is not always working
+// From https://stackoverflow.com/a/41749865
+export const isPWA = () => !!(navigator.standalone || window.matchMedia("(display-mode: standalone)").matches);
