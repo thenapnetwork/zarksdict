@@ -19,6 +19,7 @@ export default () => {
             <Route path="/view" element={<View />} />
             <Route path="/error" element={<ErrorPage />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/privacy.html" element={<Privacy />} />
         </Routes>
     </BrowserRouter>;
 }
