@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaSave } from "react-icons/fa";
 import { MdNorthEast } from "react-icons/md";
 
 import { getSheet, getSheetsList } from "../Google/APIs";
 import { errorShow, Loading, genRandomString, showPopUp as createPopUp, getMonth } from "../util";
+import { Database } from "../db";
 import Button from "../Button";
 import Input from "../Input";
 import Separate from "../Separate";
@@ -27,7 +28,7 @@ export default () => {
         month: "",
         day: 0
     });
-    const [alert, setAlert] = useState(<></>);
+    const [saveStatus, setSaveStatus] = useState(false);
 
     function selectData(type, value) {
         if (type === 0) setSelectParams({
@@ -60,8 +61,76 @@ export default () => {
         </>);
     }
 
+    async function saveData() {
+        setSaveStatus(true);
+        if (await Database.words.count() > 0) {
+            let setting = await Database.setting.get("saveStatus");
+            let choise = confirm(`您確定要覆蓋您之前的儲存? 於${(new Date(setting.value.at)).toLocaleString()}儲存的${setting.value.length}筆資料。`);
+            if (!choise) return;
+            await Promise.all([Database.setting.where('setting').equals("saveStatus").delete(), Database.words.clear()]).then(e => console.log("Deleted"));
+        }
+        for (let w of data.wlist) {
+            Database.words.add(w);
+        }
+
+        Database.setting.add({
+            setting: "saveStatus",
+            value: {
+                at: Date.now(),
+                length: data.wlist.length
+            }
+        });
+
+        createPopUp("通知", "已儲存所有單字!");
+    }
+
     useEffect(() => {
         let FILE;
+        let isReadLocal = false;
+
+        try {
+            isReadLocal = state.load;
+        } catch (err) { }
+
+        async function b() {
+            setLoadStatus("本地端資源");
+
+            const date = new Date();
+            let matches = [false, 0];
+
+            const wlist = await Database.words.toArray();
+            let formatedData = {};
+            for (let dt of wlist) {
+                if (!formatedData[dt.year]) formatedData[dt.year] = {};
+                if (!formatedData[dt.year][dt.month]) formatedData[dt.year][dt.month] = {};
+                if (!formatedData[dt.year][dt.month][dt.day]) formatedData[dt.year][dt.month][dt.day] = {};
+                if (!formatedData[dt.year][dt.month][dt.day][dt.type]) formatedData[dt.year][dt.month][dt.day][dt.type] = [];
+
+                if (dt.month == getMonth(date.getMonth() + 1)[0] && dt.day === date.getDate()) {
+                    matches[0] = true;
+                    matches[1] = dt.year;
+                }
+
+                formatedData[dt.year][dt.month][dt.day][dt.type].push({
+                    chinese: dt.chinese,
+                    english: dt.english
+                });
+            }
+
+            setLoadStatus("載入");
+            setData({ init: true, formatedData, wlist });
+
+            setSelectParams({
+                year: matches[0] ? matches[1] : Object.keys(formatedData)[0],
+                month: matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
+                day: matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
+            });
+        }
+
+        if (isReadLocal) {
+            b();
+            return;
+        }
 
         try {
             FILE = state.file;
@@ -199,7 +268,6 @@ export default () => {
     return !data.init
         ? <Loading extra={loadStatus} />
         : <div>
-            {alert}
             <div className="function">
                 <SelectInput title="年分" defaultValue={selectParams.year} onChange={(val) => selectData(0, val)} options={parserObject.options.year} />
                 <SelectInput title="月份" defaultValue={getMonth(selectParams.month)[1]} onChange={(val) => selectData(1, val)} options={parserObject.options.month} />
@@ -208,6 +276,7 @@ export default () => {
             </div>
 
             <Link to={"/"}><Button Icon={FaChevronLeft}>返回主頁</Button></Link>
+            <Button Icon={FaSave} onClick={saveData} isDisable={saveStatus}></Button>
 
             <Separate>單字表</Separate>
 

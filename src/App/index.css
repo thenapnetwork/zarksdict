@@ -1,0 +1,13 @@
+.mainApp {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    min-height: calc(100vh - 235px);
+}
+
+.mainApp > div {
+    width: 80%;
+    max-width: 1500px;
+    min-width: 350px;
+}

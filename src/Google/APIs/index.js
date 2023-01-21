@@ -2,6 +2,7 @@ const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_TOKEN;
 const GOOGLE_OAUTH_CLIENT_ID = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
 const SCOPES = [
     'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/spreadsheets.readonly',
     'https://www.googleapis.com/auth/drive.metadata.readonly'
 ].join(" ");
@@ -101,6 +102,11 @@ export const getSheet = (sheetID, thisRange) => {
         var request = gapi.client.sheets.spreadsheets.values.get(PARAMS);
         request.then(res, rej);
     });
+}
+
+export const getUserInfo = () => {
+    if (!gapi.client.getToken()?.access_token) return;
+    return fetch("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + gapi.client.getToken().access_token).then(e => e.json());
 }
 
 export const Logout = () => {

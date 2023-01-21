@@ -9,12 +9,14 @@ import Footer from "../Footer";
 
 import { Loading, showPopUp } from "../util";
 
+import "./index.css";
+
 export default () => {
     const [mount, setMount] = useState(<Loading />);
 
     useEffect(() => {
         async function a() {
-            await Promise.all([initAPI(), initOAuth()]);
+            if (navigator.onLine) await Promise.all([initAPI(), initOAuth()]);
             setMount(<Router />);
 
             if (!localStorage.getItem("isNotFirst")) {

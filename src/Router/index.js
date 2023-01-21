@@ -23,7 +23,7 @@ export default () => {
             <Route path="/privacy.html" element={<Privacy />} />
 
             {/* PWA mode functions */}
-            <Route path="/functions" element={<Functions />} />
+            <Route path="/functions/*" element={<Functions />} />
         </Routes>
     </BrowserRouter>;
 }

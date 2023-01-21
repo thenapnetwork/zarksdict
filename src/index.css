@@ -12,18 +12,6 @@ a {
     color: unset;
 }
 
-.mainApp {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.mainApp > div {
-    width: 80%;
-    max-width: 1500px;
-    min-width: 350px;
-}
-
 .topMargin {
     margin-top: 30px;
 }

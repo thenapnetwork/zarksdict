@@ -1,13 +1,25 @@
+import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaGoogleDrive, FaLink, FaChevronLeft, FaRegFile } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 
-import { isLogined, FilePicker, Logout } from "../Google/APIs";
+import { isLogined, FilePicker, getUserInfo, Logout } from "../Google/APIs";
 import Button from "../Button";
 import Separate from "../Separate";
+import AccountCard from "../Google/AccountCard";
 
 export default () => {
     const navigate = useNavigate();
+    const [accountInfo, setAccountInfo] = useState({
+        isFetched: false
+    });
+
+    useEffect(() => {
+        if (!isLogined()) return;
+        getUserInfo().then((data) => {
+            setAccountInfo({ isFetched: true, ...data });
+        });
+    }, []);
 
     function fp() {
         FilePicker().then((data) => {
@@ -39,11 +51,21 @@ export default () => {
                 {
                     isLogined() &&
                     <>
+                        {
+                            accountInfo.isFetched && <div style={{
+                                textAlign: "start",
+                                marginBlock: 15
+                            }}>
+                                <h3>當前登入為</h3>
+                                <AccountCard userName={accountInfo.name} userEmail={accountInfo.email} userPicture={accountInfo.picture} />
+                            </div>
+                        }
                         <Button Icon={FaRegFile} onClick={() => gn("1LTTKTmuYSrG408_pSyazFsMlaMdHWCLOi2TgqzFzhQg")}>快速開啟該Sheet</Button>
                         <Button Icon={FaGoogleDrive} onClick={fp}>用 Google Drive 選擇</Button>
                         <Separate>或</Separate>
                     </>
                 }
+
 
                 <Button Icon={FaLink} onClick={() => {
                     let url = prompt("請輸入該Excel的網址。如: https://docs.google.com/spreadsheets/d/blablablabla");
