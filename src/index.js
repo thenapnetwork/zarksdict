@@ -9,7 +9,7 @@
  * Homepage: https://zarksdict.hlhsinfo.ml
  * Git Repository: https://github.com/TWMSSS/zarksdict
  * 
- **/
+**/
 
 import ReactDOM from "react-dom/client";
 import App from "./App";

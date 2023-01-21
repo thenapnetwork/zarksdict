@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { FaTwitter } from "react-icons/fa";
 
 import { initAPI, initOAuth } from "../Google/APIs";
@@ -37,12 +37,14 @@ export default () => {
     return <>
         <Header />
 
-        {/* Zark's Dictionary App Pages mount. */}
-        <div className="mainApp">
-            <div>
-                {mount}
+        <Suspense fallback={<Loading />}>
+            {/* Zark's Dictionary App Pages mount. */}
+            <div className="mainApp">
+                <div>
+                    {mount}
+                </div>
             </div>
-        </div>
+        </Suspense>
 
         <Footer />
     </>;

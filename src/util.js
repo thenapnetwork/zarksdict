@@ -3,6 +3,17 @@ import { FaCircleNotch } from "react-icons/fa";
 
 import PopUp from "./PopUp";
 
+let popupRender;
+export const initPopUp = () => {
+    if (popupRender) return;
+
+    let pop = document.createElement("div");
+    pop.id = "popup";
+    document.body.appendChild(pop);
+
+    popupRender = createRoot(document.querySelector("#popup"))
+}
+
 export const Loading = ({ extra }) => {
     const TEXT = [
         "史詩",
@@ -45,11 +56,10 @@ export const errorShow = (error, navigate) => {
 export const genRandomString = (length) => (Math.random() * length * Math.pow(10, length)).toString(36).substring(0, length);
 
 export const showPopUp = (title, children, onClose = () => { }) => {
-    let pop = document.createElement("div");
-    pop.id = "popup";
-    document.body.appendChild(pop);
-    createRoot(document.querySelector("#popup")).render(<PopUp title={title} onClose={() => {
-        document.querySelector("#popup")?.remove();
+    if (!popupRender) initPopUp();
+
+    popupRender.render(<PopUp title={title} onClose={() => {
+        popupRender.render(<></>);
         onClose();
     }}>{children}</PopUp>);
 }

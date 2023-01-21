@@ -31,8 +31,8 @@ export default () => {
                     color: "#fff"
                 }}>開發中...</h1>
             </div>
-            <Link to={"/exam"}><Button Icon={FaPencilAlt}>隨機測驗</Button></Link>
-            <Button Icon={FaBell} isDisable={!isPWA()}>自動通知{!isPWA() && "(需安裝PWA)"}</Button>
+            <Link to={"exam"}><Button Icon={FaPencilAlt}>隨機測驗</Button></Link>
+            <Link to={"feed"}><Button Icon={FaBell} isDisable={!isPWA()}>自動通知{!isPWA() && "(需安裝PWA)"}</Button></Link>
         </div>
     </div>;
 }
