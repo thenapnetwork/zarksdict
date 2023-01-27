@@ -1,4 +1,4 @@
-import { genRandomString } from "../util";
+import { genRandomString } from "../../util";
 
 export default ({ title, defaultValue, options = [], onChange = () => { } }) => {
     const ID = genRandomString(5);

@@ -1,9 +1,6 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
-// import Menu from "./Menu";
-// import Exam from "./Exam";
-// import Feed from "./Feed";
 const Menu = lazy(() => import("./Menu"));
 const Exam = lazy(() => import("./Exam"));
 const Feed = lazy(() => import("./Feed"));

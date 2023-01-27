@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { FaCircleNotch } from "react-icons/fa";
 
-import PopUp from "./PopUp";
+import PopUp from "./Elements/PopUp";
 
 let popupRender;
 export const initPopUp = () => {
@@ -25,8 +25,10 @@ export const Loading = ({ extra }) => {
         "QQ",
         "好喔",
         "啥?",
-        "正常"
-    ]
+        "正常",
+        "WTF",
+        "沒空"
+    ];
 
     return <div className="center topMargin">
         <div className="textCenter">

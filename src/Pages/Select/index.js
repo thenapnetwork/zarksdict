@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { FaGoogleDrive, FaLink, FaChevronLeft, FaRegFile } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 
-import { isLogined, FilePicker, getUserInfo, Logout } from "../Google/APIs";
-import Button from "../Button";
-import Separate from "../Separate";
-import AccountCard from "../Google/AccountCard";
+import { isLogined, FilePicker, getUserInfo, Logout } from "../../Elements/Google/APIs";
+import Button from "../../Elements/Button";
+import Separate from "../../Elements/Separate";
+import AccountCard from "../../Elements/Google/AccountCard";
 
 export default () => {
     const navigate = useNavigate();

@@ -3,13 +3,13 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaChevronLeft, FaSave } from "react-icons/fa";
 import { MdNorthEast } from "react-icons/md";
 
-import { getSheet, getSheetsList } from "../Google/APIs";
-import { errorShow, Loading, genRandomString, showPopUp as createPopUp, getMonth } from "../util";
-import { Database } from "../db";
-import Button from "../Button";
-import Input from "../Input";
-import Separate from "../Separate";
-import SelectInput from "../SelectInput";
+import { getSheet, getSheetsList } from "../../Elements/Google/APIs";
+import { errorShow, Loading, genRandomString, showPopUp as createPopUp, getMonth } from "../../util";
+import { Database } from "../../db";
+import Button from "../../Elements/Button";
+import Input from "../../Elements/Input";
+import Separate from "../../Elements/Separate";
+import SelectInput from "../../Elements/SelectInput";
 import WordBox from "./WordBox";
 
 import "./index.css";
@@ -23,28 +23,21 @@ export default () => {
     });
     const [loadStatus, setLoadStatus] = useState(undefined);
     const [search, setSearch] = useState("");
-    const [selectParams, setSelectParams] = useState({
-        year: 0,
-        month: "",
-        day: 0
-    });
+    const [selectParams, setSelectParams] = useState([0, "", 0]); // #0 => year, #1 => month, #2 => day
     const [saveStatus, setSaveStatus] = useState(false);
 
     function selectData(type, value) {
-        if (type === 0) setSelectParams({
-            year: value,
-            month: Object.keys(data.formatedData[value])[0],
-            day: Object.keys(data.formatedData[value][Object.keys(data.formatedData[value])[0]])[0]
-        });
-        if (type === 1) setSelectParams({
-            ...selectParams,
-            month: getMonth(value)[0],
-            day: Object.keys(data.formatedData[selectParams.year][getMonth(value)[0]])[0]
-        });
-        if (type === 2) setSelectParams({
-            ...selectParams,
-            day: value
-        });
+        if (type === 0) setSelectParams([
+            value,
+            Object.keys(data.formatedData[value])[0],
+            Object.keys(data.formatedData[value][Object.keys(data.formatedData[value])[0]])[0]
+        ]);
+        if (type === 1) setSelectParams([
+            selectParams[0],
+            getMonth(value)[0],
+            Object.keys(data.formatedData[selectParams[0]][getMonth(value)[0]])[0]
+        ]);
+        if (type === 2) setSelectParams([selectParams[0], selectParams[1], value]);
     }
 
     function showPopUp(chinese, english, type) {
@@ -120,11 +113,11 @@ export default () => {
             setLoadStatus("載入");
             setData({ init: true, formatedData, wlist });
 
-            setSelectParams({
-                year: matches[0] ? matches[1] : Object.keys(formatedData)[0],
-                month: matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
-                day: matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
-            });
+            setSelectParams([
+                matches[0] ? matches[1] : Object.keys(formatedData)[0],
+                matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
+                matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
+            ]);
         }
 
         if (isReadLocal) {
@@ -194,7 +187,7 @@ export default () => {
                         bfM = m;
                         m = s[0];
                         d = Number(s[1]);
-                        y = m !== "December" && bfM === "December" ? ++y : y;
+                        y = m !== getMonth(12)[0] && bfM === getMonth(12)[0] ? ++y : y;
 
                         if (m == getMonth(date.getMonth() + 1)[0] && d === date.getDate()) {
                             matches[0] = true;
@@ -232,11 +225,11 @@ export default () => {
                 setLoadStatus("載入");
                 setData({ init: true, formatedData, wlist });
 
-                setSelectParams({
-                    year: matches[0] ? matches[1] : Object.keys(formatedData)[0],
-                    month: matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
-                    day: matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
-                });
+                setSelectParams([
+                    matches[0] ? matches[1] : Object.keys(formatedData)[0],
+                    matches[0] ? getMonth(date.getMonth() + 1)[0] : Object.keys(formatedData[Object.keys(formatedData)[0]])[0],
+                    matches[0] ? date.getDate() : Object.keys(formatedData[Object.keys(formatedData)[0]][Object.keys(formatedData[Object.keys(formatedData)[0]])[0]])[0]
+                ]);
             } catch (err) {
                 console.error("Catch Error:", err);
                 errorShow("您可能選擇到錯誤的檔案，本系統無法解析該Sheet，請返回然後再試一次。", navigate);
@@ -247,31 +240,40 @@ export default () => {
         a();
     }, []);
 
-    let parserObject = {
-        options: {
-            year: [],
-            month: [],
-            day: []
-        },
-        display: undefined
-    }
+    // parserObject => {
+    //     options: {
+    //         year: [],
+    //         month: [],
+    //         day: []
+    //     },
+    //     display: undefined
+    // }
+
+    let parserObject = [
+        [
+            [],
+            [],
+            []
+        ],
+        undefined
+    ]
 
     if (data.init) {
-        parserObject.options.year = Object.keys(data.formatedData);
-        parserObject.options.month = Object.keys(data.formatedData[selectParams.year]).map(e => getMonth(e)[1]);
-        parserObject.options.day = Object.keys(data.formatedData[selectParams.year][Object.keys(data.formatedData[selectParams.year])[0]]);
+        parserObject[0][0] = Object.keys(data.formatedData);
+        parserObject[0][1] = Object.keys(data.formatedData[selectParams[0]]).map(e => getMonth(e)[1]);
+        parserObject[0][2] = Object.keys(data.formatedData[selectParams[0]][Object.keys(data.formatedData[selectParams[0]])[0]]);
 
-        if (!search.trim()) parserObject.display = data.formatedData[selectParams.year][selectParams.month][selectParams.day];
-        else parserObject.display = data.wlist.filter(e => e.english && e.english.includes(search.trim().toLowerCase()) || e.chinese && e.chinese.includes(search.trim()));
+        if (!search.trim()) parserObject[1] = data.formatedData[selectParams[0]][selectParams[1]][selectParams[2]];
+        else parserObject[1] = data.wlist.filter(e => e.english && e.english.includes(search.trim().toLowerCase()) || e.chinese && e.chinese.includes(search.trim()));
     }
 
     return !data.init
         ? <Loading extra={loadStatus} />
         : <div>
             <div className="function">
-                <SelectInput title="年分" defaultValue={selectParams.year} onChange={(val) => selectData(0, val)} options={parserObject.options.year} />
-                <SelectInput title="月份" defaultValue={getMonth(selectParams.month)[1]} onChange={(val) => selectData(1, val)} options={parserObject.options.month} />
-                <SelectInput title="天" defaultValue={selectParams.day} onChange={(val) => selectData(2, val)} options={parserObject.options.day} />
+                <SelectInput title="年分" defaultValue={selectParams[0]} onChange={(val) => selectData(0, val)} options={parserObject[0][0]} />
+                <SelectInput title="月份" defaultValue={getMonth(selectParams[1])[1]} onChange={(val) => selectData(1, val)} options={parserObject[0][1]} />
+                <SelectInput title="天" defaultValue={selectParams[2]} onChange={(val) => selectData(2, val)} options={parserObject[0][2]} />
                 <Input title="查詢單字" defaultValue={search} onChange={setSearch} />
             </div>
 
@@ -283,9 +285,9 @@ export default () => {
             <div id="dict">
                 <div className="wordList">
                     {
-                        !Array.isArray(parserObject.display)
-                            ? Object.keys(parserObject.display).map((key) => {
-                                let value = parserObject.display[key];
+                        !Array.isArray(parserObject[1])
+                            ? Object.keys(parserObject[1]).map((key) => {
+                                let value = parserObject[1][key];
                                 let words = value.map(d => <WordBox key={genRandomString(12)} {...d} onClick={() => showPopUp(d.chinese, d.english, key)} />);
                                 return <div key={genRandomString(8)} style={{
                                     width: "100%"
@@ -297,7 +299,7 @@ export default () => {
                                 </div>;
                             })
                             : <div className="wordList">
-                                {parserObject.display.map(e => <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />)}
+                                {parserObject[1].map(e => <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />)}
                             </div>
                     }
                 </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { FaTwitter } from "react-icons/fa";
 
-import { initAPI, initOAuth } from "../Google/APIs";
+import { initAPI, initOAuth } from "../Elements/Google/APIs";
 
 import Header from "../Header";
 import Router from "../Router";

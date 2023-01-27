@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { FaPencilAlt, FaBell } from "react-icons/fa";
+import { FaPencilAlt, FaBell, FaChevronLeft } from "react-icons/fa";
 
-import { isPWA } from "../../util";
-import Button from "../../Button";
+import { isPWA } from "../../../util";
+import Button from "../../../Elements/Button";
 
 export default () => {
     return <div>
@@ -33,6 +33,10 @@ export default () => {
             </div>
             <Link to={"exam"}><Button Icon={FaPencilAlt}>隨機測驗</Button></Link>
             <Link to={"feed"}><Button Icon={FaBell} isDisable={!isPWA()}>自動通知{!isPWA() && "(需安裝PWA)"}</Button></Link>
+        </div>
+
+        <div className="center">
+            <Link to={"/"}><Button Icon={FaChevronLeft}>返回主頁</Button></Link>
         </div>
     </div>;
 }

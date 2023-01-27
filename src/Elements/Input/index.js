@@ -1,4 +1,4 @@
-import { genRandomString } from "../util";
+import { genRandomString } from "../../util";
 
 import "./index.css";
 

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
 
-import Intro from "../Intro";
-import Button from "../Button";
+import Intro from "../../Elements/Intro";
+import Button from "../../Elements/Button";
 
 export default () => {
     const [display, setDisplay] = useState(<></>);

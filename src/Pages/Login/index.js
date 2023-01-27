@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronLeft, FaHdd } from "react-icons/fa";
 
-import { OAuthClient, isLogined, status } from "../Google/APIs";
-import { Database } from "../db";
-import LoginButton from "../Google/LoginButton";
-import Separate from "../Separate";
-import Button from "../Button";
+import { OAuthClient, isLogined, status } from "../../Elements/Google/APIs";
+import { Database } from "../../db";
+import LoginButton from "../../Elements/Google/LoginButton";
+import Separate from "../../Elements/Separate";
+import Button from "../../Elements/Button";
 
 export default () => {
     const navigate = useNavigate();

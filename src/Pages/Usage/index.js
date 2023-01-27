@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
 
-import Button from "../Button";
-import Intro from "../Intro";
+import Button from "../../Elements/Button";
+import Intro from "../../Elements/Intro";
 
 export default () => {
     return <div className="topMargin">

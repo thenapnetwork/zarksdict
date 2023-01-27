@@ -70,7 +70,7 @@ export const FilePicker = (type = google.picker.ViewId.SPREADSHEETS) => {
             .enableFeature(google.picker.Feature.NAV_HIDDEN)
             .setCallback((data) => {
                 if (data[google.picker.Response.ACTION] != google.picker.Action.PICKED) return;
-                res(data)
+                res(data);
             })
             .build();
 

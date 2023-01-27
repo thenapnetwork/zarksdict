@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { FaPlay, FaRegFile, FaQuestion } from "react-icons/fa";
 import { MdFunctions } from "react-icons/md";
 
-import { isPWA } from "../util";
-import Separate from "../Separate";
-import Intro from "../Intro";
-import Button from "../Button";
+import { isPWA } from "../../util";
+import Separate from "../../Elements/Separate";
+import Intro from "../../Elements/Intro";
+import Button from "../../Elements/Button";
 
 export default () => {
     return isPWA() 
