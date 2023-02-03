@@ -261,7 +261,7 @@ export default () => {
     if (data.init) {
         parserObject[0][0] = Object.keys(data.formatedData);
         parserObject[0][1] = Object.keys(data.formatedData[selectParams[0]]).map(e => getMonth(e)[1]);
-        parserObject[0][2] = Object.keys(data.formatedData[selectParams[0]][Object.keys(data.formatedData[selectParams[0]])[0]]);
+        parserObject[0][2] = Object.keys(data.formatedData[selectParams[0]][selectParams[1]]);
 
         if (!search.trim()) parserObject[1] = data.formatedData[selectParams[0]][selectParams[1]][selectParams[2]];
         else parserObject[1] = data.wlist.filter(e => e.english && e.english.includes(search.trim().toLowerCase()) || e.chinese && e.chinese.includes(search.trim()));

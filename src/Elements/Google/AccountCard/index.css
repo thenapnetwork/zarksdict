@@ -9,7 +9,7 @@
 
 .accountCard:hover {
     transform: translate(5px, -5px);
-    box-shadow: -5px 5px 5px 0 #00000060;
+    box-shadow: -5px 5px 5px 0 #0037ff60;
     border-color: #0037ff;
 }
 
