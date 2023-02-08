@@ -89,3 +89,4 @@ export const getMonth = (monthString) => {
 // Check PWA is not always working
 // From https://stackoverflow.com/a/41749865
 export const isPWA = () => !!(navigator.standalone || window.matchMedia("(display-mode: standalone)").matches);
+export const calcIframeWidth = () => Math.round(Math.sqrt(1000 * 1000 - window.innerWidth * window.innerWidth));

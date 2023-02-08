@@ -1,13 +1,24 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaPlay, FaRegFile, FaQuestion } from "react-icons/fa";
 import { MdFunctions } from "react-icons/md";
 
-import { isPWA } from "../../util";
+import { calcIframeWidth, isPWA } from "../../util";
 import Separate from "../../Elements/Separate";
 import Intro from "../../Elements/Intro";
 import Button from "../../Elements/Button";
 
 export default () => {
+    const wid = calcIframeWidth();
+    const [iframeHight, setiframeHight] = useState(wid === wid ? wid : 320);
+
+    useEffect(() => {
+        new ResizeObserver(() => {
+            const size = calcIframeWidth();
+            setiframeHight(size === size ? size : 320);
+        }).observe(document.body);
+    }, []);
+
     return isPWA() 
         ? <div>
             <div className="center">
@@ -39,6 +50,19 @@ export default () => {
                     <Intro>
                         您的意見很重要，發現系統障礙、錯誤或是希望新增功能，<a href="https://forms.gle/4GThakfbrCvTfiod6">請填寫此表單</a>
                     </Intro>
+                </div>
+            </div>
+
+            <div className="center">
+                <div style={{
+                    width: "100%"
+                }}>
+                    <iframe id="countdown" src="https://twmsss.github.io/GSAT-Timer/#/embed" style={{
+                        width: "100%",
+                        height: iframeHight,
+                        border: 0
+                    }}></iframe>
+                    <p>Countdown timer from: <a href="https://twmsss.github.io/GSAT-Timer/">https://twmsss.github.io/GSAT-Timer/</a></p>
                 </div>
             </div>
 
