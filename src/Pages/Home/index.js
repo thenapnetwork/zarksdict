@@ -22,6 +22,19 @@ export default () => {
     return isPWA() 
         ? <div>
             <div className="center">
+                <div style={{
+                    width: "100%"
+                }}>
+                    <iframe id="countdown" src="https://twmsss.github.io/GSAT-Timer/#/embed" style={{
+                        width: "100%",
+                        height: iframeHight,
+                        border: 0
+                    }}></iframe>
+                    <p>Countdown timer from: <a href="https://twmsss.github.io/GSAT-Timer/">https://twmsss.github.io/GSAT-Timer/</a></p>
+                </div>
+            </div>
+
+            <div className="center">
                 <div className="btns">
                     <Link to={"/login"}><Button Icon={FaPlay}>讓我們開始吧!</Button></Link>
                     <Link to={"/functions"}><Button Icon={MdFunctions}>更多功能</Button></Link>
