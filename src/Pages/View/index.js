@@ -182,6 +182,7 @@ export default () => {
                     let data = sheetData.result.values.shift();
                     let l = data;
                     if (l[0]) {
+                        if (l.length < 10) continue;
                         let s = l[0].split(" ");
 
                         bfM = m;
