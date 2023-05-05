@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaChevronLeft, FaSave } from "react-icons/fa";
-import { MdNorthEast } from "react-icons/md";
+import { MdDelete, MdNorthEast, MdTune } from "react-icons/md";
 
 import { getSheet, getSheetsList } from "../../Elements/Google/APIs";
 import { errorShow, Loading, genRandomString, showPopUp as createPopUp, getMonth } from "../../util";
@@ -21,10 +21,23 @@ export default () => {
     const [data, setData] = useState({
         init: false
     });
+    const [inputTarget, setInputTarget] = useState(null);
     const [loadStatus, setLoadStatus] = useState(undefined);
     const [search, setSearch] = useState("");
     const [selectParams, setSelectParams] = useState([0, "", 0]); // #0 => year, #1 => month, #2 => day
     const [saveStatus, setSaveStatus] = useState(false);
+
+    const [searchConfig, setSearchConfig] = useState({
+        startTime: null,
+        endTime: null,
+        limite: null,
+        type: null,
+    });
+
+    function eleSetTarget(target) {
+        if (inputTarget) return;
+        setInputTarget(target);
+    }
 
     function selectData(type, value) {
         if (type === 0) setSelectParams([
@@ -272,10 +285,37 @@ export default () => {
         ? <Loading extra={loadStatus} />
         : <div>
             <div className="function">
-                <SelectInput title="年分" defaultValue={selectParams[0]} onChange={(val) => selectData(0, val)} options={parserObject[0][0]} />
-                <SelectInput title="月份" defaultValue={getMonth(selectParams[1])[1]} onChange={(val) => selectData(1, val)} options={parserObject[0][1]} />
-                <SelectInput title="天" defaultValue={selectParams[2]} onChange={(val) => selectData(2, val)} options={parserObject[0][2]} />
-                <Input title="查詢單字" defaultValue={search} onChange={setSearch} />
+                <div style={{
+                    display: "flex",
+                    flexWrap: "wrap"
+                }}>
+                    <SelectInput title="年分" defaultValue={selectParams[0]} onChange={(val) => selectData(0, val)} options={parserObject[0][0]} />
+                    <SelectInput title="月份" defaultValue={getMonth(selectParams[1])[1]} onChange={(val) => selectData(1, val)} options={parserObject[0][1]} />
+                    <SelectInput title="天" defaultValue={selectParams[2]} onChange={(val) => selectData(2, val)} options={parserObject[0][2]} />
+                </div>
+                <Input title="查詢單字" defaultValue={search} onChange={(value, target) => {
+                    if (!inputTarget) eleSetTarget(target);
+                    setSearch(value);
+                }} rightFunctions={[
+                    {
+                        Icon: MdDelete,
+                        active: !!search,
+                        onClick: () => {
+                            inputTarget.value = "";
+                            setSearch("");
+                        }
+                    },
+                    {
+                        Icon: MdTune,
+                        active: true,
+                        onClick: () => {
+                            // TODO: Create advance search option
+                            createPopUp("搜尋設定", <>
+                                <h1>Coming Soon!</h1>
+                            </>);
+                        }
+                    }
+                ]} />
             </div>
 
             <Link to={"/"}><Button Icon={FaChevronLeft}>返回主頁</Button></Link>
