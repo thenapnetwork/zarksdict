@@ -11,6 +11,7 @@ import Input from "../../Elements/Input";
 import Separate from "../../Elements/Separate";
 import SelectInput from "../../Elements/SelectInput";
 import WordBox from "./WordBox";
+import SpellSuggest from "../../Elements/SpellSuggest";
 
 import "./index.css";
 
@@ -27,7 +28,27 @@ export default () => {
     const [selectParams, setSelectParams] = useState([0, "", 0]); // #0 => year, #1 => month, #2 => day
     const [saveStatus, setSaveStatus] = useState(false);
 
+    // parserObject => {
+    //     options: {
+    //         year: [],
+    //         month: [],
+    //         day: []
+    //     },
+    //     display: undefined,
+    //     init: false
+    // }
+    const [parserObject, setParserObject] = useState([
+        [
+            [],
+            [],
+            []
+        ],
+        undefined,
+        false
+    ]);
+
     const [searchConfig, setSearchConfig] = useState({
+        wordSuggest: false,
         startTime: null,
         endTime: null,
         limite: null,
@@ -37,6 +58,19 @@ export default () => {
     function eleSetTarget(target) {
         if (inputTarget) return;
         setInputTarget(target);
+    }
+
+    function showSearchConfig() {
+        const baseYear = new Date().getFullYear() - Object.keys(data.formatedData).length + 1;
+        const baseMonth = Object.keys(data.formatedData[Object.keys(data.formatedData)[0]])[0];
+        const baseDay = Object.keys(data.formatedData[Object.keys(data.formatedData)[0]][baseMonth])[0];
+
+        createPopUp("搜尋設定", <>
+            <Input type="checkbox" defaultValue={searchConfig.wordSuggest} title={"拼字檢查"} onChange={(val, target) => setSearchConfig(config => ({ ...config, wordSuggest: target.checked }))} />
+            {/* <Input type="date" defaultValue={null} title="start time" inputArgs={{
+                min: `${baseYear}-${String(getMonth(baseMonth)[2]).padStart(2, "0")}-${baseDay.padStart(2, "0")}`,
+            }} /> */}
+        </>);
     }
 
     function selectData(type, value) {
@@ -254,34 +288,53 @@ export default () => {
         a();
     }, []);
 
-    // parserObject => {
-    //     options: {
-    //         year: [],
-    //         month: [],
-    //         day: []
-    //     },
-    //     display: undefined
-    // }
+    useEffect(() => {
+        async function a() {
+            const po = [...parserObject];
 
-    let parserObject = [
-        [
-            [],
-            [],
-            []
-        ],
-        undefined
-    ]
+            if (!data.init) return;
 
-    if (data.init) {
-        parserObject[0][0] = Object.keys(data.formatedData);
-        parserObject[0][1] = Object.keys(data.formatedData[selectParams[0]]).map(e => getMonth(e)[1]);
-        parserObject[0][2] = Object.keys(data.formatedData[selectParams[0]][selectParams[1]]);
+            po[0][0] = Object.keys(data.formatedData);
+            po[0][1] = Object.keys(data.formatedData[selectParams[0]]).map(e => getMonth(e)[1]);
+            po[0][2] = Object.keys(data.formatedData[selectParams[0]][selectParams[1]]);
 
-        if (!search.trim()) parserObject[1] = data.formatedData[selectParams[0]][selectParams[1]][selectParams[2]];
-        else parserObject[1] = data.wlist.filter(e => e.english && e.english.includes(search.trim().toLowerCase()) || e.chinese && e.chinese.includes(search.trim()));
+            const searchString = search.trim().toLowerCase();
+            const suggestion = searchConfig.wordSuggest ? await SpellSuggest(searchString) : [];
+            if (!searchString) po[1] = data.formatedData[selectParams[0]][selectParams[1]][selectParams[2]];
+            else po[1] = data.wlist.filter(e => searchString.includes("*") || e.english && e.english.includes(searchString) || e.chinese && e.chinese.includes(searchString) || suggestion.some(e => e == e.english || e == e.chinese));
+
+            po[2] = true;
+
+            setParserObject(po);
+        }
+
+        a();
+    }, [search, selectParams, data]);
+
+    let displayContent;
+
+    if (parserObject[2]) {
+        displayContent = !Array.isArray(parserObject[1])
+            ? Object.keys(parserObject[1]).map((key) => {
+                let value = parserObject[1][key];
+                let words = value.map(d => <WordBox key={genRandomString(12)} {...d} onClick={() => showPopUp(d.chinese, d.english, key)} />);
+                return <div key={genRandomString(8)} style={{
+                    width: "100%"
+                }}>
+                    <h1>({key}.) 系列</h1>
+                    <div className="wordList">
+                        {words}
+                    </div>
+                </div>;
+            })
+            : <div className="wordList">
+                {parserObject[1].map(e => <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />)}
+            </div>;
+    } else {
+        displayContent = <Loading />;
     }
 
-    return !data.init
+    return !data.init || !parserObject[0]?.[0]?.length || !parserObject[0]?.[1]?.length|| !parserObject[0]?.[2]?.length
         ? <Loading extra={loadStatus} />
         : <div>
             <div className="function">
@@ -308,12 +361,7 @@ export default () => {
                     {
                         Icon: MdTune,
                         active: true,
-                        onClick: () => {
-                            // TODO: Create advance search option
-                            createPopUp("搜尋設定", <>
-                                <h1>Coming Soon!</h1>
-                            </>);
-                        }
+                        onClick: showSearchConfig // TODO: Create advance search option
                     }
                 ]} />
             </div>
@@ -324,25 +372,10 @@ export default () => {
             <Separate>單字表</Separate>
 
             <div id="dict">
-                <div className="wordList">
-                    {
-                        !Array.isArray(parserObject[1])
-                            ? Object.keys(parserObject[1]).map((key) => {
-                                let value = parserObject[1][key];
-                                let words = value.map(d => <WordBox key={genRandomString(12)} {...d} onClick={() => showPopUp(d.chinese, d.english, key)} />);
-                                return <div key={genRandomString(8)} style={{
-                                    width: "100%"
-                                }}>
-                                    <h1>({key}.) 系列</h1>
-                                    <div className="wordList">
-                                        {words}
-                                    </div>
-                                </div>;
-                            })
-                            : <div className="wordList">
-                                {parserObject[1].map(e => <WordBox key={genRandomString(12)} {...e} onClick={() => showPopUp(e.chinese, e.english, e.type)} />)}
-                            </div>
-                    }
+                <div className="wordList" style={{
+                    justifyContent: parserObject[1] ? "unset" : "center"
+                }}>
+                    {displayContent}
                 </div>
             </div>
         </div>;

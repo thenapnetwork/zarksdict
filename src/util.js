@@ -67,23 +67,23 @@ export const showPopUp = (title, children, onClose = () => { }) => {
 }
 
 export const monthsData = [
-    ["January", "一月"],
-    ["February", "二月"],
-    ["March", "三月"],
-    ["April", "四月"],
-    ["May", "五月"],
-    ["June", "六月"],
-    ["July", "七月"],
-    ["August", "八月"],
-    ["September", "九月"],
-    ["October", "十月"],
-    ["November", "十一月"],
-    ["December", "十二月"]
+    ["January", "一月", 1],
+    ["February", "二月", 2],
+    ["March", "三月", 3],
+    ["April", "四月", 4],
+    ["May", "五月", 5],
+    ["June", "六月", 6],
+    ["July", "七月", 7],
+    ["August", "八月", 8],
+    ["September", "九月", 9],
+    ["October", "十月", 10],
+    ["November", "十一月", 11],
+    ["December", "十二月", 12]
 ];
 
 export const getMonth = (monthString) => {
     if (typeof monthString === "number") return monthsData[monthString - 1];
-    return monthsData.find(e => e[0] === monthString || e[1] === monthString);
+    return monthsData.find(e => e[0] === monthString || e[1] === monthString || e[1] == monthString);
 }
 
 // Check PWA is not always working

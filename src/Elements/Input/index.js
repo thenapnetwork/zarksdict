@@ -2,7 +2,7 @@ import { genRandomString } from "../../util";
 
 import "./index.css";
 
-export default ({ title, defaultValue = "", onChange = () => { }, rightFunctions = [] }) => {
+export default ({ title, type, defaultValue = "", onChange = () => { }, rightFunctions = [], inputArgs = {} }) => {
     const ID = genRandomString(5);
 
     return <div className="input">
@@ -10,7 +10,7 @@ export default ({ title, defaultValue = "", onChange = () => { }, rightFunctions
         <div style={{
             display: "flex"
         }}>
-            <input id={ID} defaultValue={defaultValue} onChange={(val) => onChange(val.target.value, val.target)} />
+            <input id={ID} defaultValue={defaultValue} defaultChecked={type == "checkbox" && defaultValue == true} type={type || "text"} onChange={(val) => onChange(val.target.value, val.target)} {...inputArgs} />
             <div style={{
                 height: "100%",
                 display: "flex",
