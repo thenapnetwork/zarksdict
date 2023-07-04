@@ -186,6 +186,8 @@ export default () => {
             let bfM = "";
             let d = 0;
 
+            let b = 0;
+
             let matches = [false, 0];
 
             let nType = [];
@@ -197,6 +199,11 @@ export default () => {
                     if (l[0]) {
                         if (l.length < 10) continue;
                         let s = l[0].split(" ");
+
+                        if (s.length !== 2) {
+                            s = l[1].split(" ");
+                            b = 1;
+                        }
 
                         bfM = m;
                         m = s[0];
@@ -211,7 +218,7 @@ export default () => {
                         if (!formatedData[y]) formatedData[y] = {};
                         if (!formatedData[y][m]) formatedData[y][m] = {};
 
-                        nType = [l[1], l[4], l[7]].map(text => text.replace(/\((\w*)\.\)/gm, "$1"));
+                        nType = [l[b + 1], l[b + 4], l[b + 7]].map(text => text.replace(/\((\w*)\.\)/gm, "$1"));
                         
                         formatedData[y][m][d] = {
                             [nType[0]]: [],
@@ -222,16 +229,16 @@ export default () => {
 
                     for (let i = 0; i < 3; i++) {
                         wlist.push({
-                            chinese: l[3 + 3 * i],
-                            english: l[2 + 3 * i],
+                            chinese: l[b + 3 + 3 * i],
+                            english: l[b + 2 + 3 * i],
                             year: y,
                             month: m,
                             day: d,
                             type: nType[i]
                         })
                         formatedData[y][m][d][nType[i]].push({
-                            chinese: l[3 + 3 * i],
-                            english: l[2 + 3 * i]
+                            chinese: l[b + 3 + 3 * i],
+                            english: l[b + 2 + 3 * i]
                         });
                     }
                 }
