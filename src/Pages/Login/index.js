@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaChevronLeft, FaHdd } from "react-icons/fa";
+import { FaChevronLeft, FaHdd, FaRegFile } from "react-icons/fa";
 
 import { OAuthClient, isLogined, status } from "../../Elements/Google/APIs";
 import { Database } from "../../db";
@@ -16,6 +16,14 @@ export default () => {
         navigate("/view", {
             state: {
                 load: true
+            }
+        });
+    }
+
+    function gn(sheetID) {
+        navigate("/view", {
+            state: {
+                file: sheetID
             }
         });
     }
@@ -44,6 +52,7 @@ export default () => {
                         </div>
 
                         <Separate>或</Separate>
+                        <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>開啟暑輔複習</Button>
                     </>
                     : <h3>您無法於離線狀態下查詢線上表單</h3>
             }

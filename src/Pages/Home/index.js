@@ -19,7 +19,7 @@ export default () => {
         }).observe(document.body);
     }, []);
 
-    return isPWA() 
+    return isPWA() || localStorage.getItem("isNotFirst")
         ? <div>
             <div className="center">
                 <div className="btns">

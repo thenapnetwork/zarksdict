@@ -61,7 +61,7 @@ export default () => {
                             </div>
                         }
                         <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>暑輔複習</Button>
-                        <Button Icon={FaRegFile} onClick={() => gn("1LTTKTmuYSrG408_pSyazFsMlaMdHWCLOi2TgqzFzhQg")}>快速開啟該Sheet</Button>
+                        {/* <Button Icon={FaRegFile} onClick={() => gn("1LTTKTmuYSrG408_pSyazFsMlaMdHWCLOi2TgqzFzhQg")}>快速開啟該Sheet</Button> */}
                         <Button Icon={FaGoogleDrive} onClick={fp}>用 Google Drive 選擇</Button>
                         <Separate>或</Separate>
                     </>

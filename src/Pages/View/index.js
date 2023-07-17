@@ -228,6 +228,7 @@ export default () => {
                     }
 
                     for (let i = 0; i < 3; i++) {
+                        if (!l[b + 3 + 3 * i] || !l[b + 2 + 3 * i]) continue;
                         wlist.push({
                             chinese: l[b + 3 + 3 * i],
                             english: l[b + 2 + 3 * i],
@@ -280,7 +281,7 @@ export default () => {
     ]
 
     if (data.init) {
-        parserObject[0][0] = Object.keys(data.formatedData);
+        parserObject[0][0] = Object.keys(data.formatedData).map(e => `第${e}年`);
         parserObject[0][1] = Object.keys(data.formatedData[selectParams[0]]).map(e => getMonth(e)[1]);
         parserObject[0][2] = Object.keys(data.formatedData[selectParams[0]][selectParams[1]]);
 
