@@ -47,12 +47,14 @@ export default () => {
             {
                 (navigator.onLine && (status().API && status().OAuth))
                     ? <>
-                        <div className="center topMargin">
+                        {/* Google OAuth is temporarily disabled */}
+                        <h3>當前不需要使用Google即可查看單字表</h3>
+                        {/* <div className="center topMargin">
                             <LoginButton onClick={() => OAuthClient().requestAccessToken()} />
                         </div>
 
                         <Separate>或</Separate>
-                        <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>開啟暑輔複習</Button>
+                        <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>開啟暑輔複習</Button> */}
                     </>
                     : <h3>您無法於離線狀態下查詢線上表單</h3>
             }
