@@ -29,6 +29,15 @@ export default () => {
                     <p><FaTwitter /> - @Hen000000hen</p>
                 </div>, () => localStorage.setItem("isNotFirst", "true"));
             }
+
+            if (!localStorage.getItem("changeOwner")) {
+                showPopUp("由 The NAP Platform 維護", <div>
+                    <p>由於SanZi Network的計畫項目調整，TWMSSS解散。</p>
+                    <p>而Zark's Dictionary將從TWMSSS轉移至The NAP Platform。</p>
+                    <br />
+                    <p><FaTwitter /> - @napplatform</p>
+                </div>, () => localStorage.setItem("changeOwner", "true"));
+            }
         }
 
         a();
