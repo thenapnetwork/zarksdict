@@ -54,7 +54,7 @@ export default () => {
                         </div> */}
 
                         <Separate>或</Separate>
-                        <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>開啟暑輔複習</Button>
+                        <Button Icon={FaRegFile} onClick={() => gn("1EBd10umKJhHUaZqKtuEV8YFOsJoAGX0ffPuOO-qIAN4")}>開啟學測複習單字表</Button>
                     </>
                     : <h3>您無法於離線狀態下查詢線上表單</h3>
             }
