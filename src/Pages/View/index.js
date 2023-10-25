@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { FaChevronLeft, FaSave } from "react-icons/fa";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { MdDelete, MdNorthEast, MdTune } from "react-icons/md";
 
 import { getSheet, getSheetsList } from "../../Elements/Google/APIs";
@@ -327,6 +328,7 @@ export default () => {
             </div>
 
             <Link to={"/"}><Button Icon={FaChevronLeft}>返回主頁</Button></Link>
+            {state.file && <a href={"https://docs.google.com/spreadsheets/d/".concat(state.file)} target="_blank"><Button Icon={FaArrowUpRightFromSquare} isDisable={saveStatus}></Button></a>}
             <Button Icon={FaSave} onClick={saveData} isDisable={saveStatus}></Button>
 
             <Separate>單字表</Separate>
