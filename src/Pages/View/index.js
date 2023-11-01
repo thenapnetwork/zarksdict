@@ -195,7 +195,7 @@ export default () => {
 
             try {
                 for (let i = 0; i < sheetData.result.values.length; i++) {
-                    let data = sheetData.result.values.shift();
+                    let data = sheetData.result.values[i];
                     let l = data;
                     if (l[0]) {
                         if (l.length < 10) continue;
