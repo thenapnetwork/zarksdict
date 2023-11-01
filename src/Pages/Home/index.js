@@ -7,10 +7,13 @@ import { calcIframeWidth, isPWA } from "../../util";
 import Separate from "../../Elements/Separate";
 import Intro from "../../Elements/Intro";
 import Button from "../../Elements/Button";
+import { useExternalScripts } from "../../Hooks";
 
 export default () => {
     const wid = calcIframeWidth();
     const [iframeHight, setiframeHight] = useState(wid === wid ? wid : 320);
+    
+    useExternalScripts("https://nap.social/embed.js");
 
     useEffect(() => {
         new ResizeObserver(() => {
@@ -29,6 +32,19 @@ export default () => {
                     <Link to={"/usage"}><Button Icon={FaRegFile}>使用說明</Button></Link>
                 </div>
             </div>
+
+            <Intro>
+                你知道嗎?
+                <iframe
+                    src="https://nap.social/@muisnow/111334682021388432/embed"
+                    className="mastodon-embed"
+                    style={{
+                        maxWidth: "100%",
+                        border: 0
+                    }}
+                    width="400"
+                    allowFullScreen="allowfullscreen"></iframe>
+            </Intro>
 
             <div className="center">
                 <div style={{

@@ -228,6 +228,8 @@ export default () => {
                         };
                     }
 
+                    // console.log(y, m, d)
+
                     for (let i = 0; i < 3; i++) {
                         if (!l[b + 3 + 3 * i] || !l[b + 2 + 3 * i]) continue;
                         wlist.push({
