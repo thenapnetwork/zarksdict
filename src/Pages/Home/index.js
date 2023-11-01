@@ -34,7 +34,7 @@ export default () => {
             </div>
 
             <Intro>
-                你知道嗎?
+                <h2>你知道嗎? 11月是NNN喔!</h2>
                 <iframe
                     src="https://nap.social/@muisnow/111334682021388432/embed"
                     className="mastodon-embed"
