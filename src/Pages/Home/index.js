@@ -39,7 +39,7 @@ export default () => {
                     src="https://nap.social/@muisnow/111334682021388432/embed"
                     className="mastodon-embed"
                     style={{
-                        maxWidth: "100%",
+                        width: "100%",
                         border: 0
                     }}
                     width="400"
