@@ -34,16 +34,7 @@ export default () => {
             </div>
 
             <Intro>
-                <h2>你知道嗎? 11月是NNN喔!</h2>
-                <iframe
-                    src="https://nap.social/@muisnow/111334682021388432/embed"
-                    className="mastodon-embed"
-                    style={{
-                        width: "100%",
-                        border: 0
-                    }}
-                    width="400"
-                    allowFullScreen="allowfullscreen"></iframe>
+                <h2>The NAP Platform 與 Muisnow 祝你學測順利！</h2>
             </Intro>
 
             <div className="center">
