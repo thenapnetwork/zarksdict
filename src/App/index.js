@@ -19,24 +19,12 @@ export default () => {
             if (navigator.onLine) await Promise.all([initAPI(), initOAuth()]);
             setMount(<Router />);
 
-            if (!localStorage.getItem("isNotFirst")) {
-                showPopUp("你好!", <div>
-                    <p>歡迎使用這個工具！我很高興你會發現這個神奇的網頁工具。</p>
-                    <p>你好！我是製作這個工具的人Muisnow，很高興你會開啟這個工具然後使用它(雖然不知道你會不會使用)</p>
-                    <p>現在由於程式的架構改變，因此我們可以新增更多實用功能到這裡，如果你能提供我們開發的意見且我們能夠應付，我們將會把你所需的功能添加進來。</p>
-                    <p>就這樣了，祝你使用愉快！</p>
-                    <br />
-                    <p><FaTwitter /> - @Hen000000hen</p>
-                </div>, () => localStorage.setItem("isNotFirst", "true"));
-            }
-
-            if (!localStorage.getItem("changeOwner")) {
-                showPopUp("由 The NAP Platform 維護", <div>
-                    <p>由於SanZi Network的計畫項目調整，TWMSSS解散。</p>
-                    <p>而Zark's Dictionary將從TWMSSS轉移至The NAP Platform。</p>
-                    <br />
-                    <p><FaTwitter /> - @napplatform</p>
-                </div>, () => localStorage.setItem("changeOwner", "true"));
+            if (!localStorage.getItem("newfunc-1")) {
+                showPopUp("新功能！", <div>
+                    <h1>讓我們與AI接軌！ - Zark's Dictionary Helper</h1>
+                    <p>我們推出了一項新功能，讓您可以使用AI功能來生成範例！</p>
+                    <p>當您點擊一個單字時，Zark's Dictionary Helper將會自動出現！</p>
+                </div>, () => localStorage.setItem("newfunc-1", "true"));
             }
         }
 

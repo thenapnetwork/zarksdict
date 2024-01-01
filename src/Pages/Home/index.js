@@ -7,11 +7,14 @@ import { calcIframeWidth, isPWA } from "../../util";
 import Separate from "../../Elements/Separate";
 import Intro from "../../Elements/Intro";
 import Button from "../../Elements/Button";
-import { useExternalScripts } from "../../Hooks";
+import { useAIGenerateExample, useExternalScripts } from "../../Hooks";
 
 export default () => {
     const wid = calcIframeWidth();
+    // const word = useAIGenerateExample("knowledge");
     const [iframeHight, setiframeHight] = useState(wid === wid ? wid : 320);
+
+    // console.log(word)
     
     useExternalScripts("https://nap.social/embed.js");
 

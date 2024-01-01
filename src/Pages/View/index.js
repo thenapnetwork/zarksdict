@@ -14,6 +14,7 @@ import SelectInput from "../../Elements/SelectInput";
 import WordBox from "./WordBox";
 
 import "./index.css";
+import WordInfo from "./WordInfo";
 
 export default () => {
     const { state } = useLocation();
@@ -55,17 +56,10 @@ export default () => {
     }
 
     function showPopUp(chinese, english, type) {
-        createPopUp("詳細資訊", <>
-            <div>
-                <h1>{english} ({type}.)</h1>
-                <h3>中文意思: {chinese}</h3>
-            </div>
-            <div>
-                <a target="_blank" href={"https://www.google.com/search?q=" + english}><MdNorthEast fontSize={23} />於 <span className="special">Google</span> 上查詢「{english}」的意思</a>
-                <a target="_blank" href={"https://translate.google.com.tw/?hl=zh-TW&sl=en&tl=zh-TW&op=translate&text=" + english}><MdNorthEast fontSize={23} />於 <span className="special">Google 翻譯</span> 上查詢「{english}」的意思</a>
-                <a target="_blank" href={"https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/" + english}><MdNorthEast fontSize={23} />於 <span className="special">Cambridge Dictionary</span> 上查詢「{english}」的意思</a>
-            </div>
-        </>);
+        createPopUp("詳細資訊", <WordInfo
+            chinese={chinese}
+            english={english}
+            type={type} />);
     }
 
     async function saveData() {
