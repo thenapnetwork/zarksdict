@@ -11,19 +11,6 @@ import { useAIGenerateExample, useExternalScripts } from "../../Hooks";
 
 export default () => {
     const wid = calcIframeWidth();
-    // const word = useAIGenerateExample("knowledge");
-    const [iframeHight, setiframeHight] = useState(wid === wid ? wid : 320);
-
-    // console.log(word)
-    
-    useExternalScripts("https://nap.social/embed.js");
-
-    useEffect(() => {
-        new ResizeObserver(() => {
-            const size = calcIframeWidth();
-            setiframeHight(size === size ? size : 320);
-        }).observe(document.body);
-    }, []);
 
     return isPWA() || localStorage.getItem("isNotFirst")
         ? <div>
@@ -39,19 +26,6 @@ export default () => {
             <Intro>
                 <h2>The NAP Platform 與 Muisnow 祝你學測順利！</h2>
             </Intro>
-
-            <div className="center">
-                <div style={{
-                    width: "100%"
-                }}>
-                    <iframe id="countdown" src="https://twmsss.github.io/GSAT-Timer/#/embed" style={{
-                        width: "100%",
-                        height: iframeHight,
-                        border: 0
-                    }}></iframe>
-                    <p>Countdown timer from: <a href="https://twmsss.github.io/GSAT-Timer/">https://twmsss.github.io/GSAT-Timer/</a></p>
-                </div>
-            </div>
         </div>
         : <div>
             <Intro>
@@ -73,19 +47,6 @@ export default () => {
                     <Intro>
                         您的意見很重要，發現系統障礙、錯誤或是希望新增功能，<a href="https://forms.gle/4GThakfbrCvTfiod6">請填寫此表單</a>
                     </Intro>
-                </div>
-            </div>
-
-            <div className="center">
-                <div style={{
-                    width: "100%"
-                }}>
-                    <iframe id="countdown" src="https://twmsss.github.io/GSAT-Timer/#/embed" style={{
-                        width: "100%",
-                        height: iframeHight,
-                        border: 0
-                    }}></iframe>
-                    <p>Countdown timer from: <a href="https://twmsss.github.io/GSAT-Timer/">https://twmsss.github.io/GSAT-Timer/</a></p>
                 </div>
             </div>
 
